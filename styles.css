@@ -110,7 +110,6 @@ body {
   transform: rotate(calc(var(--num) * 30deg)) translateY(-200px) rotate(calc(var(--num) * -30deg));
 }
 
-/* Center background image */
 .center-background {
   position: absolute;
   top: 168px;
@@ -282,7 +281,6 @@ body {
   font-size: 18px;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   body {
     padding: 10px 0 0 0;

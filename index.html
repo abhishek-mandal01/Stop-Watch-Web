@@ -8,7 +8,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Author Section - Fixed Top Right -->
   <div class="author-section" id="author-section">
     <div class="author-text" id="author-btn">View Author</div>
     <div class="author-menu" id="author-menu">
@@ -50,8 +49,7 @@
     <div class="center-point"></div>
   </div>
   <div class="controls">
-    <button class="btn" id="start-btn">Start</button>
-    <button class="btn" id="stop-btn">Stop</button>
+    <button class="btn" id="toggle-btn">Start</button>
     <button class="btn" id="reset-btn">Reset</button>
   </div>
   </div>
@@ -61,50 +59,42 @@
     let startTime = 0;
     let elapsedTime = 0;
     let intervalId = null;
-    const baseRotation = 164; // Default hand position
+    const baseRotation = 164;
 
     const secondHand = document.getElementById('second-hand');
     const digitalTimer = document.getElementById('digital-timer');
-    const startBtn = document.getElementById('start-btn');
-    const stopBtn = document.getElementById('stop-btn');
+    const toggleBtn = document.getElementById('toggle-btn');
     const resetBtn = document.getElementById('reset-btn');
 
     function updateStopwatch() {
       const currentTime = Date.now();
       elapsedTime = currentTime - startTime;
 
-      // Calculate minutes, seconds, and centiseconds
       const totalSeconds = Math.floor(elapsedTime / 1000);
       const minutes = Math.floor(totalSeconds / 60);
       const seconds = totalSeconds % 60;
       const centiseconds = Math.floor((elapsedTime % 1000) / 10);
 
-      // Update digital timer display
       digitalTimer.textContent = 
         `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}:${String(centiseconds).padStart(2, '0')}`;
 
-      // Calculate rotation angle based on total elapsed time (continuous rotation)
       const totalElapsedSeconds = elapsedTime / 1000;
       const secondDegrees = baseRotation + (totalElapsedSeconds * 6);
       secondHand.style.transform = `rotate(${secondDegrees}deg)`;
     }
 
-    startBtn.addEventListener('click', () => {
+    toggleBtn.addEventListener('click', () => {
       if (!stopwatchRunning) {
         startTime = Date.now() - elapsedTime;
         intervalId = setInterval(updateStopwatch, 10);
         stopwatchRunning = true;
-        startBtn.style.opacity = '0.5';
-        stopBtn.style.opacity = '1';
-      }
-    });
-
-    stopBtn.addEventListener('click', () => {
-      if (stopwatchRunning) {
+        toggleBtn.textContent = 'Stop';
+        toggleBtn.style.background = 'rgba(255, 201, 4, 0.3)';
+      } else {
         clearInterval(intervalId);
         stopwatchRunning = false;
-        startBtn.style.opacity = '1';
-        stopBtn.style.opacity = '0.5';
+        toggleBtn.textContent = 'Start';
+        toggleBtn.style.background = 'rgba(0, 0, 0, 0.4)';
       }
     });
 
@@ -114,14 +104,10 @@
       elapsedTime = 0;
       digitalTimer.textContent = '00:00:00';
       secondHand.style.transform = `rotate(${baseRotation}deg)`;
-      startBtn.style.opacity = '1';
-      stopBtn.style.opacity = '0.5';
+      toggleBtn.textContent = 'Start';
+      toggleBtn.style.background = 'rgba(0, 0, 0, 0.4)';
     });
 
-    // Initialize
-    stopBtn.style.opacity = '0.5';
-
-    // Author menu toggle
     const authorBtn = document.getElementById('author-btn');
     const authorMenu = document.getElementById('author-menu');
     const authorSection = document.getElementById('author-section');
@@ -131,7 +117,6 @@
       authorMenu.classList.toggle('active');
     });
 
-    // Close menu when clicking outside
     document.addEventListener('click', (e) => {
       if (!authorSection.contains(e.target)) {
         authorMenu.classList.remove('active');
