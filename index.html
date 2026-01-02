@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Samay Yantra</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Author Section - Fixed Top Right -->
+  <div class="author-section" id="author-section">
+    <div class="author-text" id="author-btn">View Author</div>
+    <div class="author-menu" id="author-menu">
+      <a href="https://www.linkedin.com/in/abhishek-mandal-a70743326/" target="_blank" class="menu-item">
+        <span class="icon">💼</span> LinkedIn
+      </a>
+      <a href="mailto:18mandalabhishek@gmail.com" class="menu-item">
+        <span class="icon">📧</span> Email
+      </a>
+      <a href="https://github.com/abhishek-mandal01" target="_blank" class="menu-item">
+        <span class="icon">💻</span> GitHub
+      </a>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1 class="title"><span class="cursive">Samay</span> <span class="normal">Yantra</span></h1>
+    <div class="digital-timer" id="digital-timer">00:00:00</div>
+    <div class="clock">
+    <div class="numbers">
+      <div class="number" style="--num: 1">1</div>
+      <div class="number" style="--num: 2">2</div>
+      <div class="number" style="--num: 3">3</div>
+      <div class="number" style="--num: 4">4</div>
+      <div class="number" style="--num: 5">5</div>
+      <div class="number" style="--num: 6">6</div>
+      <div class="number" style="--num: 7">7</div>
+      <div class="number" style="--num: 8">8</div>
+      <div class="number" style="--num: 9">9</div>
+      <div class="number" style="--num: 10">10</div>
+      <div class="number" style="--num: 11">11</div>
+      <div class="number" style="--num: 12">12</div>
+    </div>
+    <div class="center-background">
+      <img class="center-image" src="samay.png" alt="Center Image" />
+    </div>
+
+    <div class="hand second" id="second-hand"></div>
+    <div class="center-point"></div>
+  </div>
+  <div class="controls">
+    <button class="btn" id="start-btn">Start</button>
+    <button class="btn" id="stop-btn">Stop</button>
+    <button class="btn" id="reset-btn">Reset</button>
+  </div>
+  </div>
+
+  <script>
+    let stopwatchRunning = false;
+    let startTime = 0;
+    let elapsedTime = 0;
+    let intervalId = null;
+    const baseRotation = 164; // Default hand position
+
+    const secondHand = document.getElementById('second-hand');
+    const digitalTimer = document.getElementById('digital-timer');
+    const startBtn = document.getElementById('start-btn');
+    const stopBtn = document.getElementById('stop-btn');
+    const resetBtn = document.getElementById('reset-btn');
+
+    function updateStopwatch() {
+      const currentTime = Date.now();
+      elapsedTime = currentTime - startTime;
+
+      // Calculate minutes, seconds, and centiseconds
+      const totalSeconds = Math.floor(elapsedTime / 1000);
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+      const centiseconds = Math.floor((elapsedTime % 1000) / 10);
+
+      // Update digital timer display
+      digitalTimer.textContent = 
+        `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}:${String(centiseconds).padStart(2, '0')}`;
+
+      // Calculate rotation angle based on total elapsed time (continuous rotation)
+      const totalElapsedSeconds = elapsedTime / 1000;
+      const secondDegrees = baseRotation + (totalElapsedSeconds * 6);
+      secondHand.style.transform = `rotate(${secondDegrees}deg)`;
+    }
+
+    startBtn.addEventListener('click', () => {
+      if (!stopwatchRunning) {
+        startTime = Date.now() - elapsedTime;
+        intervalId = setInterval(updateStopwatch, 10);
+        stopwatchRunning = true;
+        startBtn.style.opacity = '0.5';
+        stopBtn.style.opacity = '1';
+      }
+    });
+
+    stopBtn.addEventListener('click', () => {
+      if (stopwatchRunning) {
+        clearInterval(intervalId);
+        stopwatchRunning = false;
+        startBtn.style.opacity = '1';
+        stopBtn.style.opacity = '0.5';
+      }
+    });
+
+    resetBtn.addEventListener('click', () => {
+      clearInterval(intervalId);
+      stopwatchRunning = false;
+      elapsedTime = 0;
+      digitalTimer.textContent = '00:00:00';
+      secondHand.style.transform = `rotate(${baseRotation}deg)`;
+      startBtn.style.opacity = '1';
+      stopBtn.style.opacity = '0.5';
+    });
+
+    // Initialize
+    stopBtn.style.opacity = '0.5';
+
+    // Author menu toggle
+    const authorBtn = document.getElementById('author-btn');
+    const authorMenu = document.getElementById('author-menu');
+    const authorSection = document.getElementById('author-section');
+
+    authorBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      authorMenu.classList.toggle('active');
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!authorSection.contains(e.target)) {
+        authorMenu.classList.remove('active');
+      }
+    });
+  </script>
+  
+  <footer class="footer">
+    <p>&copy; Samay Yantra. Built with creativity. Copying this may accidentally send you back to 2019.</p>
+  </footer>
+</body>
+</html>
