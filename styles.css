@@ -17,6 +17,10 @@ body {
   min-height: 100vh;
   font-family: 'Arial', sans-serif;
   padding: 20px 0 0 0;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .container {
@@ -198,7 +202,7 @@ body {
 }
 
 .author-section {
-  position: fixed;
+  position: absolute;
   top: 20px;
   right: 20px;
   z-index: 1000;
@@ -206,12 +210,16 @@ body {
 
 .author-text {
   color: rgb(255, 201, 4);
-  font-size: 16px;
+  font-size: 24px;
   font-weight: bold;
   cursor: pointer;
-  padding: 12px 24px;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: rgba(0, 0, 0, 0.5);
-  border-radius: 25px;
+  border-radius: 50%;
   border: 2px solid rgba(255, 201, 4, 0.6);
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -288,7 +296,9 @@ body {
 
   .container {
     gap: 20px;
-    padding: 0 10px;
+    padding: 0 15px;
+    width: 100%;
+    max-width: 100%;
   }
 
   .author-section {
@@ -297,12 +307,13 @@ body {
   }
 
   .author-text {
-    font-size: 14px;
-    padding: 10px 18px;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
   }
 
   .author-menu {
-    min-width: 170px;
+    min-width: 160px;
   }
 
   .menu-item {
@@ -376,16 +387,55 @@ body {
   .footer {
     font-size: 12px;
     padding: 12px 10px;
+    margin-bottom: 20px;
   }
 }
 
 @media (max-width: 480px) {
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+  }
+
+  body {
+    padding: 10px 0 0 0;
+  }
+
   .container {
     gap: 15px;
+    width: 100%;
+    max-width: 100vw;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+
+  .author-section {
+    top: 10px;
+    right: 10px;
+  }
+
+  .author-text {
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+  }
+
+  .author-menu {
+    min-width: 150px;
+    right: 0;
+  }
+
+  .menu-item {
+    font-size: 12px;
+    padding: 8px 10px;
   }
 
   .title {
     font-size: 24px;
+    text-align: center;
+    max-width: 100%;
+    word-wrap: break-word;
   }
 
   .title .cursive {
@@ -400,57 +450,88 @@ body {
     font-size: 22px;
     padding: 10px 20px;
     letter-spacing: 1px;
+    margin-top: 20px;
   }
 
   .clock {
-    width: 280px;
-    height: 280px;
+    width: 320px;
+    height: 320px;
     border-width: 5px;
+    margin-top: 20px;
   }
 
   .clock::before {
-    width: 190px;
-    height: 190px;
+    width: 220px;
+    height: 220px;
   }
 
   .number {
-    font-size: 28px;
-    transform: rotate(calc(var(--num) * 30deg)) translateY(-112px) rotate(calc(var(--num) * -30deg));
+    font-size: 32px;
+    transform: rotate(calc(var(--num) * 30deg)) translateY(-128px) rotate(calc(var(--num) * -30deg));
   }
 
   .center-background {
-    top: 94px;
-    left: 56px;
-    width: 112px;
-    height: 80px;
+    top: 108px;
+    left: 64px;
+    width: 128px;
+    height: 92px;
   }
 
   .hand {
-    transform-origin: 56px 9px;
+    transform-origin: 64px 10px;
   }
 
   .hand.second {
-    width: 100px;
-    height: 100px;
-    margin-left: -56px;
+    width: 115px;
+    height: 115px;
+    margin-left: -64px;
   }
 
   .controls {
     gap: 10px;
+    width: 100%;
+    max-width: 280px;
+    justify-content: center;
+    margin-top: 20px;
   }
 
   .btn {
     padding: 10px 20px;
     font-size: 14px;
+    flex: 1;
+    min-width: 0;
   }
 
   .footer {
     font-size: 10px;
     padding: 10px 5px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 20px;
   }
 }
 
 @media (max-width: 320px) {
+  .author-section {
+    top: 8px;
+    right: 8px;
+  }
+
+  .author-text {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+
+  .author-menu {
+    min-width: 140px;
+  }
+
+  .menu-item {
+    font-size: 11px;
+    padding: 6px 8px;
+  }
+
   .title {
     font-size: 20px;
   }
