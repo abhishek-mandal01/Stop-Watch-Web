@@ -509,6 +509,7 @@ body {
     padding: 10px 5px;
     width: 100%;
     box-sizing: border-box;
+    margin-top: 100px;
     margin-bottom: 20px;
   }
 }
