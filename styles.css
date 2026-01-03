@@ -400,6 +400,8 @@ body {
 
   body {
     padding: 10px 0 0 0;
+    min-height: auto;
+    height: auto;
   }
 
   .container {
